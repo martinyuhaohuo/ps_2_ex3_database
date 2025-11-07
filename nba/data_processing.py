@@ -77,3 +77,28 @@ def get_team_attendance(connection: sql.Connection) -> pd.DataFrame:
     """
     team_attendance = pd.read_sql(query, connection)
     return team_attendance
+
+
+def get_wingspan(connection: sql.Connection) -> pd.DataFrame:
+    query = """
+        SELECT season, wingspan
+        FROM draft_combine_stats
+        WHERE wingspan is not NULL
+        ORDER BY season
+        """
+
+    data = pd.read_sql(query, connection)
+    return data
+
+
+def get_player_school(connection: sql.Connection) -> pd.DataFrame:
+    query = """
+        SELECT school, COUNT(*) AS player_count
+        FROM common_player_info
+        WHERE school IS NOT NULL AND school != ''
+        GROUP BY school
+        ORDER BY player_count DESC
+        LIMIT 10
+        """
+    dataset = pd.read_sql(query, connection)
+    return dataset

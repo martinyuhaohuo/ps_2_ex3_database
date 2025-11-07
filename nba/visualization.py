@@ -52,3 +52,25 @@ def plot_avg_attend(team_attendance: pd.DataFrame) -> None:
     plt.title("Avg Attendece at Home Games by NBA Teams in Past Two Decades")
     plt.tight_layout()
     plt.show()
+
+
+def box_plot(data: pd.DataFrame) -> None:
+    # Create a box plot
+    plt.figure(figsize=(15, 8))
+    plt.boxplot(
+        [
+            data[data["season"] == season]["wingspan"]
+            for season in data["season"].unique()
+        ],
+        label=sorted(data["season"].unique()),
+    )
+
+    plt.title("Distribution of Wingspan by Season")
+    plt.xlabel("Season")
+    plt.ylabel("Wingspan (inches)")
+    plt.xticks(rotation=45)
+    plt.grid(True, alpha=0.3)
+
+    # Add some padding to prevent label cutoff
+    plt.tight_layout()
+    plt.show()
